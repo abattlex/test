@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ :title }}</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <form method="post" class="login-form">
+            <label class="login-form__item">Name:
+                <input name="name">
+            </label>
+            <label class="login-form__item">Password:
+                <input name="pass" type="password">
+            </label>
+            <input type="submit" value="{{ :action }}" class="login-form__button">
+        </form>
+    </div>
+</body>
+</html>
