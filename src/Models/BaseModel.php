@@ -24,7 +24,6 @@ abstract class BaseModel
         );
         $this->tableName = null;
         $this->fields = [];
-
     }
 
     public function get(string $fieldName)
@@ -35,6 +34,7 @@ abstract class BaseModel
     public function set(string $fieldName, $value)
     {
         $this->fields[$fieldName] = $value;
+
         return $this;
     }
 
@@ -63,6 +63,7 @@ abstract class BaseModel
     {
         $fields = array_keys($this->fieldsMap);
         $params = array_map(fn (string $field) => ":$field", $fields);
+
         return sprintf('INSERT INTO %s (%s) VALUES (%s)', $this->tableName, implode(', ', $fields), implode(', ', $params));
     }
 }
