@@ -46,17 +46,24 @@ abstract class BaseModel
         $sql = $this->getSqlForFindOne();
         $statement = $this->getStatement($this->findMap, $sql, $params);
         $statement->execute();
+
         return $statement->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function save(array $params = [])
     {
-        $sql = $this->getSqlForSave();
+        $data = $this->findOne($params);
+        if (!$data) {
+            $sql = $this->getSqlForCreate();
+        } else {
+            $sql = $this->getSqlForUpdate($data['id']);
+        }
         $statement = $this->getStatement($this->saveMap, $sql, $params);
 
         if ($statement->execute()) {
             return $this->findOne($params);
         }
+
         return false;
     }
 
@@ -87,11 +94,18 @@ abstract class BaseModel
         return sprintf('SELECT * FROM %s WHERE %s', $this->tableName, implode(' AND ', $conditions));
     }
 
-    protected function getSqlForSave(): string
+    protected function getSqlForCreate(): string
     {
         $fields = array_keys($this->saveMap);
         $params = array_map(fn (string $field) => ":$field", $fields);
 
         return sprintf('INSERT INTO %s (%s) VALUES (%s)', $this->tableName, implode(', ', $fields), implode(', ', $params));
+    }
+
+    protected function getSqlForUpdate(int $id): string
+    {
+        $conditions = array_map(fn ($field) => "$field = :$field", array_keys($this->saveMap));
+
+        return sprintf('UPDATE %s SET %s WHERE id = %d', $this->tableName, implode(', ', $conditions), $id);
     }
 }
