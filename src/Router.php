@@ -16,6 +16,7 @@ class Router
             $this->routes[$route] = [
                 $handler['controller'],
                 $handler['action'],
+                $handler['middleware'] ?? null,
             ];
         }
     }

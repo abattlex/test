@@ -17,12 +17,18 @@ class FrontController
 
     public function processRequest()
     {
-        $route                  = $_SERVER['REQUEST_URI'];
-        [$controller, $action]  = $this->router->get($route);
+        $route                              = $_SERVER['REQUEST_URI'];
+        [$controller, $action, $middleware] = $this->router->get($route);
+
+        if ($middleware) {
+            foreach ($middleware as $class) {
+                $mid = $this->container->get($class);
+                $this->request = $mid->process($this->request);
+            }
+        }
 
         if (!$controller) {
-            header("HTTP/1.0 404 Not Found");
-            return '404 Not Found';
+            Response::notFound();
         }
 
         $controller = $this->container->get($controller);

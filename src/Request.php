@@ -9,11 +9,24 @@ class Request
 
     protected string $method;
     protected array $params;
+    protected ?Session $session;
 
     public function __construct()
     {
-        $this->params = $_REQUEST;
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->params   = $_REQUEST;
+        $this->method   = $_SERVER['REQUEST_METHOD'];
+        $this->session  = null;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(Session $session): Request
+    {
+        $this->session = $session;
+        return $this;
     }
 
     public function get(string $paramName)

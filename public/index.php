@@ -9,6 +9,11 @@ include VENDOR_DIR . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $container = new \App\SimpleContainer();
 
-$app = $container->get(\App\App::class);
-
-$app->run();
+try {
+    $app = $container->get(\App\App::class);
+    $app->run();
+} catch (Exception $e) {
+    header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+    echo 'Something went wrong';
+    die();
+}

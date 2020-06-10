@@ -11,7 +11,7 @@ class User extends BaseModel
         parent::__construct($config);
         $this->tableName = 'users';
 
-        $this->fieldsMap = [
+        $this->saveMap = [
             'name'  => [
                 self::PARAM_TYPE    => \PDO::PARAM_STR,
             ],
@@ -20,5 +20,24 @@ class User extends BaseModel
                 self::PARAM_HANDLER => fn (string $pass) => password_hash($pass, PASSWORD_DEFAULT),
             ],
         ];
+
+        $this->findMap = [
+            'name'  => [
+                self::PARAM_TYPE    => \PDO::PARAM_STR,
+            ],
+        ];
+    }
+
+    public function findOne(array $params = [])
+    {
+        $user = parent::findOne($params);
+        if ($user) {
+            $hash = $user['pass'];
+            if (password_verify($params['pass'], $hash)) {
+                return $user;
+            }
+        }
+
+        return null;
     }
 }

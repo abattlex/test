@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Response;
 use App\SimpleContainer;
 
 abstract class BaseController
@@ -22,5 +23,10 @@ abstract class BaseController
             array_values($params),
             $template
         );
+    }
+
+    public function redirect(string $url, int $code = Response::HTTP_CODE_REDIRECT)
+    {
+        Response::redirect($url, $code);
     }
 }
