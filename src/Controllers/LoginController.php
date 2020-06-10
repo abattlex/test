@@ -22,7 +22,7 @@ class LoginController extends BaseController
             $this->redirect('/user/products');
         }
 
-        return $this->render('user', [
+        return $this->render('login', [
             ':title'    => 'Login',
             ':action'   => 'Login',
         ]);
@@ -39,7 +39,7 @@ class LoginController extends BaseController
             }
         }
 
-        return $this->render('user', [
+        return $this->render('login', [
             ':title'    => 'Register',
             ':action'   => 'Register',
         ]);
