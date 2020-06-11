@@ -31,9 +31,26 @@ class Router
 
     public function get(string $route): ?array
     {
-        $route = self::clearRoute($route);
+        $route  = self::clearRoute($route);
+        $result = $this->routes[$route] ?? null;
+        if (!$result) {
+            foreach ($this->routes as $key => $routeData) {
+                $pattern = "#^$key$#";
+                if (preg_match($pattern, $route, $params)) {
+                    $uriParams = [];
+                    foreach ($params as $paramKey => $paramValue) {
+                        if (!is_int($paramKey)) {
+                            $uriParams[$paramKey] = $paramValue;
+                        }
+                    }
+                    $routeData[] = $uriParams;
+                    $result = $routeData;
+                    break;
+                }
+            }
+        }
 
-        return $this->routes[$route] ?? null;
+        return $result;
     }
 
     public static function clearRoute(string $route): string

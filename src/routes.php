@@ -20,4 +20,9 @@ return [
         'action'            => 'showProductsAction',
         'middleware'        => [App\Middleware\SessionMiddleware::class, App\Middleware\AuthMiddleware::class],
     ],
+    '/product/(?<product_id>\d+)/users' => [
+        'controller'        => App\Controllers\ProductController::class,
+        'action'            => 'showUsersAction',
+        'middleware'        => [App\Middleware\SessionMiddleware::class, App\Middleware\AuthMiddleware::class],
+    ],
 ];

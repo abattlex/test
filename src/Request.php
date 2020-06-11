@@ -10,12 +10,25 @@ class Request
     protected string $method;
     protected array $params;
     protected ?Session $session;
+    protected ?array $uriParams;
 
     public function __construct()
     {
-        $this->params   = $_REQUEST;
-        $this->method   = $_SERVER['REQUEST_METHOD'];
-        $this->session  = null;
+        $this->params       = $_REQUEST;
+        $this->method       = $_SERVER['REQUEST_METHOD'];
+        $this->session      = null;
+        $this->uriParams    = null;
+    }
+
+    public function getUriParams()
+    {
+        return $this->uriParams;
+    }
+
+    public function setUriParams(array $uriParams)
+    {
+        $this->uriParams = $uriParams;
+        return $this;
     }
 
     public function getSession(): ?Session

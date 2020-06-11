@@ -13,7 +13,7 @@ class UserProductsForm implements FormInterface
         $this->user = $user;
     }
 
-    public function render(): string
+    public function render(array $params = []): string
     {
         $userId = $this->user->get('id');
         $products = $this->user->getProducts($userId);

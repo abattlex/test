@@ -12,7 +12,6 @@ class UserController extends BaseController
     {
         if ($request->isPOST()) {
             $params         = $request->getParams();
-            //$params['user'] = $request->getSession()->get(Session::KEY_USER_ID);
             $user = $this->container->get(User::class);
             $user->saveProducts($params);
 

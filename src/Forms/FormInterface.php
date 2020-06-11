@@ -4,5 +4,5 @@ namespace App\Forms;
 
 interface FormInterface
 {
-    public function render(): string;
+    public function render(array $params = []): string;
 }

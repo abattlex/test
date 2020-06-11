@@ -18,7 +18,7 @@ class FrontController
     public function processRequest()
     {
         $route                              = $_SERVER['REQUEST_URI'];
-        [$controller, $action, $middleware] = $this->router->get($route);
+        [$controller, $action, $middleware, $params] = $this->router->get($route);
 
         if ($middleware) {
             foreach ($middleware as $class) {
@@ -32,6 +32,10 @@ class FrontController
         }
 
         $controller = $this->container->get($controller);
+
+        if ($params) {
+            $this->request->setUriParams($params);
+        }
 
         return $controller->$action($this->request);
     }

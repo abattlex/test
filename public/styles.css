@@ -17,6 +17,11 @@ img {
     max-width: 100%;
 }
 
+table, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -67,4 +72,3 @@ img {
     height: 30px;
     margin-left: auto;
 }
-
